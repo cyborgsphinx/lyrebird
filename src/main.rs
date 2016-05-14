@@ -6,6 +6,7 @@ use std::env;
 use std::fs::File;
 use std::io::{Read, Write};
 use std::error::Error;
+use std::process;
 
 use decrypt::decrypt;
 
@@ -38,9 +39,17 @@ fn begin_decryption(config: String) -> Result<(), String>{
                     Ok(procc) => {
                         if procc.is_child() {
                             match child_work(in_file, out_file) {
-                                Ok(..) => println!("{} decrypted succesfully", in_file),
-                                Err(f) => println!("{} failed to decrypt: {}", in_file, f)
+                                Ok(..) => {
+                                    println!("{} decrypted succesfully", in_file);
+                                    process::exit(0);
+                                },
+                                Err(f) => {
+                                    println!("{} failed to decrypt: {}", in_file, f);
+                                    process::exit(1);
+                                }
                             };
+                        } else {
+                            println!("Starting work on {}", in_file);
                         }
                     },
                     Err(e) => {
