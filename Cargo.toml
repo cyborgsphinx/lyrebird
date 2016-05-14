@@ -2,3 +2,9 @@
 name = "lyrebird"
 version = "0.1.0"
 authors = ["James Hannah <jhannah8124@gmail.com>"]
+
+[[bin]]
+name = "lyrebird"
+
+[dependencies]
+nix = "0.5"
